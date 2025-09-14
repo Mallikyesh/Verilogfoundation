@@ -1,0 +1,24 @@
+//SINGLEBIT
+
+/*module code2 (a,b,c);
+    input a,b;
+    output c;
+    wire t1;
+    assign t1=a&b;
+    assign c=t1;
+endmodule
+*/
+
+
+
+//MULTIBIT
+
+module multibitAND(a,b,c,y);
+input[2:0]a,b,c;
+output[2:0]y;
+wire [2:0]temp1;
+
+assign temp1=a&b;
+assign y=temp1&c;
+
+endmodule

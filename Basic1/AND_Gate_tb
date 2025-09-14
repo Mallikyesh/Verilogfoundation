@@ -1,0 +1,18 @@
+module code2_tb;
+
+    reg [2:0]a, b,c; 
+    wire [2:0]y;      
+
+    multibitAND uut(.a(a), .b(b), .c(c), .y(y));
+
+    initial begin
+        a = 3'b111; b = 3'b011; c = 3'b010;
+        #10;  
+        a = 3'b111; b = 3'b011; c = 3'b010;
+        #10;
+        a = 3'b111; b = 3'b001;c = 3'b100;
+        #10;
+        $finish; // end simulation
+    end
+
+endmodule

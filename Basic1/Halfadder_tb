@@ -1,0 +1,47 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 18.09.2025 17:01:36
+// Design Name: 
+// Module Name: halfadder_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+//issue was observed in the declaration of the parameters being used in this testbench. You should not declare those parameters as input output like in design.
+//only declare the parameter types
+
+module halfadder_tb;
+reg a,b;
+wire sum,carry;
+
+
+// uut that we had learnt was to make a instance of a design file in the testbench
+halfadder HA1(.a(a),.b(b),.sum(sum),.carry(carry));
+
+initial begin
+#10;
+a=1'b0;b=1'b0;
+#10;
+a=1'b0;b=1'b1;
+#10;
+a=1'b1;b=1'b0;
+#10;
+a=1'b1;b=1'b1;
+#10;
+
+
+end
+
+endmodule

@@ -1,0 +1,32 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 18.09.2025 17:01:21
+// Design Name: 
+// Module Name: halfadder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+//error concurrent assignment to a non-net 'carry' is not permitted
+
+//when using assign statement, its important to note that only wire data types can be driven/assigned.
+//for any drive to register has to be made in always block. 
+
+module halfadder(input wire a,b, output wire sum, carry);
+
+
+assign sum = a^b;
+assign carry = a&b;
+
+endmodule

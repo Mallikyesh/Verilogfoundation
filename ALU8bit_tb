@@ -1,0 +1,79 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 18.09.2025 19:07:43
+// Design Name: 
+// Module Name: ALU8bit_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ALU8bit_tb;
+reg [7:0]a,b;
+reg [3:0]operand;
+reg enable;
+wire [15:0] result;
+
+
+ALU8bit uut(.a(a),.b(b),.op(operand),.enable(enable),.result(result));
+
+initial begin
+a=8'b00000000;b=8'b00000001;operand=4'b0000;enable=1'b0;    //enable is deactive
+#10;
+a=8'b0110;b=8'b0001;enable=1'b1;operand=4'b0000; //add
+#10;
+a=8'b0110;b=8'b0001;enable=1'b1;operand=4'b0010; //mul
+#10;
+a=8'b0110;b=8'b0111;enable=1'b1;operand=4'b0001; //sub
+#10;
+a=8'b0110;b=8'b0011;enable=1'b1;operand=4'b0011; //div
+#50;
+//bitwise
+a=8'b01101001;b=8'b0000;enable=1'b1;operand=4'b0100; //logical left shift
+#10;
+a=8'b01101001;b=8'b0000;enable=1'b1;operand=4'b0101; //logical right shift
+#10;
+a=8'b01101001;b=8'b0000;enable=1'b1;operand=4'b0110; //arithmetic left shift
+#10;
+a=8'b01101001;b=8'b0000;enable=1'b1;operand=4'b0111; //arithmetic right shift
+#50;
+
+//logical maths
+
+a=8'b0000;b=8'b00000001;enable=1'b1;operand=4'b1000;    //enable is deactive
+#10;
+a=8'b0110;b=8'b0111;enable=1'b1;operand=4'b1001; //add
+#10;
+a=8'b0110;b=8'b0111;enable=1'b1;operand=4'b1010; //mul
+#10;
+a=8'b0110;b=8'b0111;enable=1'b1;operand=4'b1011; //sub
+#10;
+a=8'b0110;b=8'b0111;enable=1'b1;operand=4'b1100; //div
+#10
+a=8'b0110;b=8'b0111;enable=1'b1;operand=4'b1101; //div
+#50;
+
+//comaparator
+a=8'b0000;b=8'b0000;enable=1'b1;operand=4'b1110;    //enable is deactive
+#10;
+a=8'b0000;b=8'b0001;enable=1'b1;operand=4'b1110;    //enable is deactive
+#50;
+
+//default
+a=8'b0000;b=8'b0001;enable=1'b1;operand=4'b1111;  
+
+$finish;
+end
+endmodule

@@ -1,0 +1,103 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 22.09.2025 18:49:50
+// Design Name: 
+// Module Name: RRA
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module RRA #(parameter N=4)(input[N-1:0] request,clk,rst,
+output reg[N-1:0]grant);
+
+//state encoding
+localparam S0=2'b00,S1=2'b01,S2=2'b10,S3=2'b11;
+reg[1:0] state, next_state;
+
+//state registers
+always@(posedge clk or negedge rst)
+begin
+    if (!rst)
+    begin
+        state <= S0;
+    end
+    else begin
+        state<=next_state;
+    end    
+end
+
+//next state logic and output logic
+
+always@(*)begin
+    grant=4'b0000;
+    next_state = state;
+    
+    case(state)
+        S0: begin
+            if (request[0]) begin grant = 4'b0001; next_state <= S1;end
+            else if(request[1])
+            begin grant = 4'b0010; next_state<=S2;
+            end
+            else if(request[2])
+            begin grant = 4'b0100; next_state<=S3;
+            end
+            else if(request[3])
+            begin grant = 4'b1000; next_state<=S0;
+            end
+        end
+        S1:begin
+        if      (request[2]) 
+        begin grant = 4'b0100; next_state = S3; 
+        end
+                else if (request[3]) 
+                begin grant = 4'b1000; next_state = S0; 
+                end
+                else if (request[0]) 
+                begin grant = 4'b0001; next_state = S1; 
+                end
+                else if (request[1])
+                 begin grant = 4'b0010; next_state = S2; 
+                 end
+        end 
+        S2: begin
+        if      (request[2]) begin grant = 4'b0100; next_state = S3; end
+                else if (request[3]) 
+                begin grant = 4'b1000; next_state = S0; 
+                end
+                else if (request[0]) 
+                begin grant = 4'b0001; next_state = S1;
+                end
+                else if (request[1]) 
+                begin grant = 4'b0010; next_state = S2; 
+                end
+        end 
+        S3:begin
+        if      (request[3]) 
+        begin grant = 4'b1000; next_state = S0; 
+        end
+                else if (request[0]) 
+                begin grant = 4'b0001; next_state = S1; 
+                end
+                else if (request[1]) 
+                begin grant = 4'b0010; next_state = S2; 
+                end
+                else if (request[2]) 
+                begin grant = 4'b0100; next_state = S3; 
+                end
+        end
+     endcase 
+end
+endmodule
